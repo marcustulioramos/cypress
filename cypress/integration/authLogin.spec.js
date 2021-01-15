@@ -18,7 +18,7 @@ describe('Registration', () => {
         cy.get('div[name=errors]').should('contain', 'These credentials do not match our records')
     });
 
-    it('Failed email', () => {
+    it('Failed password', () => {
         cy.visit('http://192.168.10.10/login')
         cy.get('input[name=email]').type('johndoe@fakeemail.co.uk')
         cy.get('input[name=password]').type('FakeP')
