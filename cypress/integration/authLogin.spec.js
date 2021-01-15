@@ -9,44 +9,39 @@ describe('Registration', () => {
         });
     });
 
-    it('Failed login email', () => {
+    it('Failed email', () => {
+        cy.visit('http://192.168.10.10/login')
+        cy.get('input[name=email]').type('janedoe@fakeemail.co.uk')
+        cy.get('input[name=password]').type('FakePassword01')
+        cy.get('input[id=remember_me]').check()
+        cy.get('button').contains('Login').click()
+        cy.get('div[name=errors]').should('contain', 'These credentials do not match our records')
+    });
+
+    it('Failed email', () => {
+        cy.visit('http://192.168.10.10/login')
+        cy.get('input[name=email]').type('johndoe@fakeemail.co.uk')
+        cy.get('input[name=password]').type('FakeP')
+        cy.get('input[id=remember_me]').check()
+        cy.get('button').contains('Login').click()
+        cy.get('div[name=errors]').should('contain', 'These credentials do not match our records')
+    });
+
+    it('Successfull login', () => {
         cy.visit('http://192.168.10.10/register')
-        cy.get('input[name=name]').type('John Doe')
-        cy.get('input[name=email]').type('johndoe@fakeemail.com')
+        cy.get('input[name=name]').type('Jane Doe')
+        cy.get('input[name=email]').type('janedoe@fakeemail.co.uk')
         cy.get('input[name=password]').type('FakePassword01')
         cy.get('input[name=password_confirmation]').type('FakePassword01')
         cy.get('button').contains('Register').click()
-        cy.get('div[name=errors]').should('contain', 'The email has already been taken')
-    });
+        cy.get('button[name=userName]').click()
+        cy.get('a').contains('Logout').click()
 
-    it('Failed registration password length', () => {
-        cy.visit('http://192.168.10.10/register')
-        cy.get('input[name=name]').type('Jane Doe')
-        cy.get('input[name=email]').type('janedoe@fakeemail.com')
-        cy.get('input[name=password]').type('Passw0r')
-        cy.get('input[name=password_confirmation]').type('Passw0r')
-        cy.get('button').contains('Register').click()
-        cy.get('div[name=errors]').should('contain', 'The password must be at least 8 characters')
-    });
-
-    it('Failed registration password not matching', () => {
-        cy.visit('http://192.168.10.10/register')
-        cy.get('input[name=name]').type('Jane Doe')
-        cy.get('input[name=email]').type('janedoe@fakeemail.com')
+        cy.visit('http://192.168.10.10/login')
+        cy.get('input[name=email]').type('janedoe@fakeemail.co.uk')
         cy.get('input[name=password]').type('FakePassword01')
-        cy.get('input[name=password_confirmation]').type('FakePassword02')
-        cy.get('button').contains('Register').click()
-        cy.get('div[name=errors]').should('contain', 'The password confirmation does not match')
-    });
-
-    it('Successfull registration', () => {
-        cy.visit('http://192.168.10.10/register')
-        cy.get('input[name=name]').type('Jane Doe')
-        cy.get('input[name=email]').type('janedoe@fakeemail.com')
-        cy.get('input[name=password]').type('FakePassword01')
-        cy.get('input[name=password_confirmation]').type('FakePassword01')
-        cy.get('button').contains('Register').click()
-        cy.url().should('contain', 'http://192.168.10.10/dashboard')
-        cy.get('div[name=labelLogged]').should('contain', 'You are logged in!')
+        cy.get('input[id=remember_me]').check()
+        cy.get('button').contains('Login').click()
+        cy.url().should('contain', '/dashboard')
     });
 });

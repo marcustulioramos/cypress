@@ -54,6 +54,5 @@ describe('Registration', () => {
         cy.get('input[name=password_confirmation]').type('FakePassword01')
         cy.get('button').contains('Register').click()
         cy.url().should('contain', '/dashboard')
-        cy.get('div[name=labelLogged]').should('contain', 'You are logged in!')
     });
 });
