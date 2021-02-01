@@ -8,7 +8,7 @@ Considering the application will run on Windows using Homestead
 ### Clone the project
 Clone the project inside the Windows vagrant projects folder
 ```
-git clone https://github.com/makmacedo/contact-manager.git
+https://github.com/marcustulioramos/ec4pTask
 ```
 ### Set environment variables.
 ```
